@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 
-setup(name='django_redirector',
+setup(name='redirector',
       version='1',
       description='Django Redirector',
       packages=find_packages(),
