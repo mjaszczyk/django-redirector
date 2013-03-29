@@ -1,16 +1,11 @@
-# -*- coding: utf-8 *-*
-from __future__ import absolute_import
-
 from django.http import QueryDict
 from django.core.urlresolvers import reverse, get_callable, RegexURLResolver, Resolver404
-from django.conf.urls.defaults import patterns
-
+from django.conf.urls import patterns
 from .models import Rule
 from .views import redirect_to
 
 
 class Redirector(object):
-
     _resolver = None
 
     class RuleNotFound(Exception):
@@ -53,14 +48,12 @@ class Redirector(object):
         except Resolver404:
             raise Redirector.RuleNotFound
         else:
-            return get_callable(matched_rule.view_name)(request, *matched_rule.args,
-                **matched_rule.kwargs)
+            return get_callable(matched_rule.view_name)(request, *matched_rule.args, **matched_rule.kwargs)
 
 
 class RedirectorMiddleware(object):
     def process_response(self, request, response):
         if response.status_code != 404:
-            # No need to check for a redirects for non-404 responses.
             return response
         try:
             return Redirector.find_redirection(request)

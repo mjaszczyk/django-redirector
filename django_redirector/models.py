@@ -6,7 +6,6 @@ from django.utils.translation import ugettext as _
 
 
 class Rule(models.Model):
-
     REDIRECTION_PERMANENT = 301
     REDIRECTION_FOUND = 302
     REDIRECTION_SEE_OTHER = 303
@@ -19,9 +18,8 @@ class Rule(models.Model):
         (REDIRECTION_TEMPORARY, u'307 Temporary Redirect'),
     )
 
-    redirection_type = models.SmallIntegerField(default=REDIRECTION_PERMANENT,
-        choices=REDIRECTION_TYPES)
-    pattern = models.CharField(max_length=300, help_text=_('simple URL witout "/" at the beginig'
+    redirection_type = models.SmallIntegerField(default=REDIRECTION_PERMANENT, choices=REDIRECTION_TYPES)
+    pattern = models.CharField(max_length=300, help_text=_('simple URL without "/" at the beginning'
                                                            'or django urlconf style pattern'))
     target_url = models.CharField(max_length=300, null=True, blank=True,
                                   help_text=_('internal or external target URL'))
@@ -35,7 +33,6 @@ class Rule(models.Model):
     order = models.PositiveSmallIntegerField()
     site = models.ForeignKey(Site)
 
-    objects = models.Manager()
     on_site = CurrentSiteManager()
 
     class Meta:

@@ -8,3 +8,5 @@
 /.settings
 .sass-cache
 /*.nja
+/*.iml
+/.idea
