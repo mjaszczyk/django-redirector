@@ -24,7 +24,7 @@ class Redirector(object):
             if rule.target_view:
                 view = rule.target_view
             if rule.target_params:
-                params = QueryDict(rule.target_params, mutable=True)
+                params = dict(QueryDict(rule.target_params, mutable=True).items())
             if rule.target_url_name:
                 params = {'url': reverse(rule.target_url_name, kwargs=params)}
             if rule.target_url:
