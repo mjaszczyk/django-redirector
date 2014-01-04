@@ -47,8 +47,14 @@ class Redirector(object):
             matched_rule = resolver.resolve(request.path_info)
         except Resolver404:
             raise Redirector.RuleNotFound
-        else:
+
+        if matched_rule is None:
+            raise Redirector.RuleNotFound
+
+        try:
             return get_callable(matched_rule.view_name)(request, *matched_rule.args, **matched_rule.kwargs)
+        except Exception, e:
+            raise Redirector.RuleNotFound
 
 
 class RedirectorMiddleware(object):
